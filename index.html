@@ -1,0 +1,189 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Meriet · Busco músicos</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,300..900&display=swap">
+<style>
+/* Layout: una columna para móvil, calcada del cartel. Fondo crema, titular negro ancho, mancha difuminada roja/amarilla, texto entre corchetes. Look único por elección. */
+:root {
+  --cream: #fbf8ec;   /* papel del cartel */
+  --ink: #141414;     /* negro de los titulares */
+  --red: #e2452f;     /* mancha roja */
+  --amber: #f2c25a;   /* halo amarillo */
+  --orange: #e8742f;  /* perfil naranja de la foto */
+  --navy: #1f3a8a;    /* perfil azul de la foto */
+  --font: "Archivo", "Arial Black", "Helvetica Neue", Arial, sans-serif;
+  color-scheme: light;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--cream);
+  color: var(--ink);
+  font-family: var(--font);
+  font-size: 16px;
+  line-height: 1.5;
+  overflow-x: hidden;
+}
+.blur {
+  position: fixed; z-index: 0; pointer-events: none;
+  left: -30vw; top: 46vh; width: 110vw; height: 38vh;
+  background:
+    radial-gradient(closest-side, var(--red) 0%, rgba(226,69,47,.55) 45%, transparent 100%),
+    radial-gradient(closest-side at 40% 20%, var(--amber), transparent 100%);
+  filter: blur(40px);
+  transform: rotate(-8deg);
+  opacity: .85;
+}
+main {
+  position: relative; z-index: 1;
+  max-width: 480px; margin: 0 auto;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+  padding-block: 24px 40px;
+  display: flex; flex-direction: column; gap: 26px;
+}
+.top {
+  display: flex; justify-content: space-between; align-items: baseline; gap: 12px;
+  font-weight: 900; font-stretch: 112%; text-transform: uppercase;
+}
+.top .name { font-size: 18px; letter-spacing: .02em; }
+.top .genres { font-size: 13px; }
+.top .genres span { font-weight: 300; margin: 0 2px; }
+
+.hero { text-align: center; display: flex; flex-direction: column; gap: 6px; }
+h1 {
+  margin: 0;
+  font-weight: 900; font-stretch: 125%;
+  font-size: clamp(50px, 16.5vw, 82px);
+  line-height: .86; letter-spacing: -.03em;
+  text-transform: uppercase;
+}
+.sub {
+  font-weight: 800; font-stretch: 112%; text-transform: uppercase;
+  font-size: clamp(17px, 5vw, 22px); letter-spacing: .01em;
+}
+
+.brackets {
+  position: relative;
+  padding: 10px 18px;
+  font-weight: 400; font-stretch: 90%;
+  text-transform: uppercase; font-size: 13.5px; line-height: 1.45; letter-spacing: .02em;
+  text-align: justify; hyphens: auto;
+}
+.brackets::before, .brackets::after {
+  content: ""; position: absolute; top: 0; bottom: 0; width: 9px;
+  border: 2px solid var(--ink);
+}
+.brackets::before { left: 0; border-right: 0; }
+.brackets::after { right: 0; border-left: 0; }
+.brackets p { margin: 0; }
+.brackets p + p { margin-top: 10px; }
+
+.frame-wrap { position: relative; padding: 0 14px 0 8px; }
+.frame-wrap::before, .frame-wrap::after {
+  content: ""; position: absolute; border-radius: 14px;
+  top: -10px; bottom: 10px;
+}
+.frame-wrap::before { left: 0; right: 22px; background: var(--orange); transform: rotate(-2.5deg); }
+.frame-wrap::after { left: 4px; right: 18px; background: var(--navy); transform: rotate(-1deg); top: -5px; bottom: 5px; }
+.frame {
+  position: relative; z-index: 1;
+  aspect-ratio: 9 / 16; width: 100%; max-width: 100%;
+  border-radius: 12px; overflow: hidden;
+  background-color: #ece8dc;
+  background-image: radial-gradient(var(--ink) 1.1px, transparent 1.4px);
+  background-size: 6px 6px;
+  border: 3px solid #fff;
+}
+.frame video { width: 100%; height: 100%; object-fit: cover; display: block; background: var(--ink); }
+.placeholder {
+  position: absolute; inset: 0;
+  display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 16px;
+  text-align: center; padding: 24px;
+  background: radial-gradient(closest-side, rgba(251,248,236,.97) 40%, rgba(251,248,236,.6) 75%, transparent);
+}
+.play {
+  width: 74px; height: 74px; border-radius: 50%; background: var(--ink);
+  display: grid; place-items: center;
+}
+.play::after { content: ""; border-left: 20px solid var(--cream); border-top: 12px solid transparent; border-bottom: 12px solid transparent; margin-left: 6px; }
+.placeholder p { margin: 0; font-weight: 800; font-stretch: 112%; text-transform: uppercase; font-size: 14px; }
+
+.call {
+  margin: 0;
+  font-weight: 900; font-stretch: 118%; text-transform: uppercase;
+  font-size: clamp(24px, 7.4vw, 32px); line-height: .95; letter-spacing: -.01em;
+}
+.cta {
+  display: flex; align-items: center; justify-content: center; gap: 12px;
+  min-height: 60px; padding: 0 24px;
+  background: var(--ink); color: var(--cream);
+  border-radius: 999px; text-decoration: none;
+  font-weight: 900; font-stretch: 115%; text-transform: uppercase; font-size: 17px; letter-spacing: .02em;
+  box-shadow: 5px 5px 0 var(--red);
+  transition: transform .15s ease, box-shadow .15s ease;
+}
+.cta:hover { transform: translate(-2px,-2px); box-shadow: 7px 7px 0 var(--red); }
+.cta:focus-visible { outline: 3px solid var(--navy); outline-offset: 4px; }
+.cta .arrow { font-weight: 400; }
+.note { margin: -12px 0 0; text-align: center; font-size: 12px; text-transform: uppercase; letter-spacing: .08em; }
+
+footer {
+  display: flex; justify-content: space-between; gap: 12px;
+  font-weight: 900; font-stretch: 112%; text-transform: uppercase; font-size: 12px;
+  border-top: 2px solid var(--ink); padding-top: 10px;
+}
+
+@media (prefers-reduced-motion: reduce) { .cta { transition: none; } .cta:hover { transform: none; } }
+</style>
+<style>html,body{margin:0}img,video{max-width:100%}</style>
+</head>
+<body>
+
+<div class="blur" aria-hidden="true"></div>
+
+<main>
+  <div class="top">
+    <span class="name">Meriet</span>
+    <span class="genres">Pop <span>/</span> Indie <span>/</span> Rock</span>
+  </div>
+
+  <header class="hero">
+    <h1>Busco<br>músicos</h1>
+    <div class="sub">Música en directo</div>
+  </header>
+
+  <div class="brackets">
+    <p>¡Gracias por escanear el código! Si has llegado hasta aquí es que algo te ha llamado, y eso ya me dice mucho.</p>
+    <p>Te dejo un vídeo para que me conozcas un poco mejor y sepas qué estoy buscando.</p>
+  </div>
+
+  <div class="frame-wrap">
+    <div class="frame" id="frame">
+      <video src="video.mp4#t=0.1" controls playsinline preload="metadata"></video>
+    </div>
+  </div>
+
+  <p class="call">Si te apetece formar parte, rellena el formulario :)</p>
+
+  <a class="cta" id="cta" href="https://forms.gle/GnodfvHdyqoy8GjDA" target="_blank" rel="noopener">Quiero apuntarme <span class="arrow" aria-hidden="true">→</span></a>
+  <p class="note">Es corto · 2 minutos</p>
+
+  <footer>
+    <span>Meriet</span>
+    <span>Ego de Cristal</span>
+  </footer>
+</main>
+
+<script>
+// Pega aquí el enlace de tu formulario:
+const FORM_URL = "https://forms.gle/GnodfvHdyqoy8GjDA";
+const cta = document.getElementById("cta");
+if (FORM_URL) cta.href = FORM_URL;
+</script>
+
+</body>
+</html>
